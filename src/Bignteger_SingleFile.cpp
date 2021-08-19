@@ -22,14 +22,7 @@ public:
 			value = v;
 		}
 	}
-	
-	void Display(){
-		if(negative == 1){
-			std::cout << "-";
-		}
-		std::cout << value << std::endl;
-	}
-	
+
 	std::string Return(){
 		std::string aux = value;
 		
@@ -38,6 +31,13 @@ public:
 		}
 		
 		return aux;
+	}
+	
+	void Display(){
+		if(negative == 1){
+			std::cout << "-";
+		}
+		std::cout << value << std::endl;
 	}
 	
 };
