@@ -14,16 +14,17 @@ public:
 	}
 	
 	Bignteger(std::string v){
+		
 		if(v[0] == '-'){
 			negative = 1;
-			
-			value = v.substr(1,v.length());
+			value = normalize(v.substr(1,v.length()));
 		} else{
-			value = v;
+			value = normalize(v);
 		}
 	}
 
 	std::string intReturn(){
+		
 		std::string aux = value;
 		
 		if(negative == 1){
@@ -34,19 +35,43 @@ public:
 	}
 	
 	void display(){
+		
 		if(negative == 1){
 			std::cout << "-";
 		}
+		
 		std::cout << value << std::endl;
+		
 	}
 	
-	bool symbol(Bignteger a){
-		return a.negative;
+	bool symbolReturn(){
+		return negative;
 	}
 	
-	bool greaterThan(Bignteger a, Bignteger b){
-		bool aSym = symbol(a);
-		bool bSym = symbol(b);
+	std::string valueReturn(){
+		return value;
+	}
+	
+	std::string normalize(std::string number){
+		
+		if(number[0] != '-'){
+			while(number.length() > 1 && number[0] == '0'){
+				number.erase(0,1);
+			}
+		} else if(number[0] == '-'){
+			while(number.length() > 2 && number[1] == '0'){
+				number.erase(1,1);
+			}
+		}
+	
+		return number;
+	
+	}
+	
+	bool greaterThan(Bignteger b){
+		
+		bool aSym = this->symbolReturn();
+		bool bSym = b.symbolReturn();
 		
 		if(aSym == 0 & bSym == 1){
 			return 1;
@@ -56,71 +81,65 @@ public:
 			return 0;
 		} else
 		
-		if((a.value.length() > b.value.length()) & (aSym == 1)){
+		if((this->value.length() > b.value.length()) & (aSym == 1)){
 			return 0;
 		} else
 		
-		if((a.value.length() < b.value.length()) & (aSym == 0)){
+		if((this->value.length() < b.value.length()) & (aSym == 0)){
 			return 0;
 		} else
 		
-		if(a.value.compare(b.value) == 0){
+		if(this->value.compare(b.value) == 0){
 			return 0;
 		} else
 		
-		if((a.value.compare(b.value) < 0) & (aSym == 0)){
+		if((this->value.compare(b.value) < 0) & (aSym == 0)){
 			return 0;
 		} else
 		
-		if((a.value.compare(b.value) < 0) & (aSym == 1)){
+		if((this->value.compare(b.value) < 0) & (aSym == 1)){
 			return 1;
 		} else
 		
-		if((a.value.compare(b.value) > 0) & (aSym == 1)){
+		if((this->value.compare(b.value) > 0) & (aSym == 1)){
 			return 0;
 		} else
 		
 		return 1;
 	}
 	
-	bool equalTo(Bignteger a, Bignteger b){
+	bool equalTo(Bignteger b){
 		
-		bool aSym = symbol(a);
-		bool bSym = symbol(b);
+		bool aSym = this->symbolReturn();
+		bool bSym = b.symbolReturn();
 		
-		if((aSym == bSym) & (a.value.compare(b.value) == 0)){
+		if((aSym == bSym) & (this->value.compare(b.value) == 0)){
 			return 1;
 		} else
 		
 		return 0;
 	}
 	
-	bool lessThan(Bignteger a, Bignteger b){
-		if((equalTo(a,b) == 0) & (greaterThan(a,b) == 0)){
+	bool lessThan(Bignteger b){
+		if((this->equalTo(b) == 0) & (this->greaterThan(b) == 0)){
 			return 1;
 		} else
 		
 		return 0;
 	}
 	
-	std::string valueSum(Bignteger A, Bignteger B){
+	std::string valueSum(Bignteger B){
 
-		std::string a = A.value;
+		std::string a = this->value;
 		std::string b = B.value;
 		
 		int diff = a.length() - b.length();
 		
 		if(diff > 0){
-			while(diff > 0){
-				b.insert(0,"0");
-				diff--;	
-			}
+			b.insert(0, diff, '0');
 		} else if (diff < 0){
 			diff *= -1;
-			while(diff > 0){
-				a.insert(0,"0");
-				diff--;
-			}
+			a.insert(0, diff, '0');
 		}
 		
 		char carry = 48;
