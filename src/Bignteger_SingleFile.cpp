@@ -68,9 +68,9 @@ public:
 	
 	}
 	
-	bool greaterThan(Bignteger b){
+	bool greaterThan(Bignteger a, Bignteger b){
 		
-		bool aSym = this->symbolReturn();
+		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
 		
 		if(aSym == 0 & bSym == 1){
@@ -81,56 +81,60 @@ public:
 			return 0;
 		} else
 		
-		if((this->value.length() > b.value.length()) & (aSym == 1)){
+		if((a.value.length() > b.value.length()) & (aSym == 1)){
 			return 0;
 		} else
 		
-		if((this->value.length() < b.value.length()) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if(this->value.compare(b.value) == 0){
-			return 0;
-		} else
-		
-		if((this->value.compare(b.value) < 0) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if((this->value.compare(b.value) < 0) & (aSym == 1)){
+		if((a.value.length() > b.value.length()) & (aSym == 0)){
 			return 1;
 		} else
 		
-		if((this->value.compare(b.value) > 0) & (aSym == 1)){
+		if((a.value.length() < b.value.length()) & (aSym == 0)){
+			return 0;
+		} else
+		
+		if(a.value.compare(b.value) == 0){
+			return 0;
+		} else
+		
+		if((a.value.compare(b.value) < 0) & (aSym == 0)){
+			return 0;
+		} else
+		
+		if((a.value.compare(b.value) < 0) & (aSym == 1)){
+			return 1;
+		} else
+		
+		if((a.value.compare(b.value) > 0) & (aSym == 1)){
 			return 0;
 		} else
 		
 		return 1;
 	}
 	
-	bool equalTo(Bignteger b){
+	bool equalTo(Bignteger a, Bignteger b){
 		
-		bool aSym = this->symbolReturn();
+		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
 		
-		if((aSym == bSym) & (this->value.compare(b.value) == 0)){
+		if((aSym == bSym) & (a.value.compare(b.value) == 0)){
 			return 1;
 		} else
 		
 		return 0;
 	}
 	
-	bool lessThan(Bignteger b){
-		if((this->equalTo(b) == 0) & (this->greaterThan(b) == 0)){
+	bool lessThan(Bignteger a, Bignteger b){
+		if((a.equalTo(a,b) == 0) & (a.greaterThan(a,b) == 0)){
 			return 1;
 		} else
 		
 		return 0;
 	}
 	
-	std::string valueSum(Bignteger B){
+	std::string valueSum(Bignteger A, Bignteger B){
 
-		std::string a = this->value;
+		std::string a = A.value;
 		std::string b = B.value;
 		
 		int diff = a.length() - b.length();
