@@ -132,7 +132,7 @@ public:
 		return 0;
 	}
 	
-	std::string valueSum(Bignteger A, Bignteger B){
+	std::string valueSum(Bignteger &A, Bignteger &B){
 
 		std::string a = A.value;
 		std::string b = B.value;
@@ -164,6 +164,60 @@ public:
 		}
 	
 		return sum;	
+
+	}
+	
+	std::string valueSubtraction(Bignteger &A, Bignteger &B){ 
+
+        std::string a;
+        std::string b;
+
+        int diff = A.value.length() - B.value.length();
+
+		if(diff > 0){
+            a = A.value;
+            b = B.value;
+			b.insert(0, diff, '0');
+		} else if (diff < 0){
+		    a = B.value;
+            b = A.value;
+			diff *= -1;
+			b.insert(0, diff, '0');
+		}   else{
+            int comp = A.value.compare(B.value);
+            if(comp == 0){
+                return "0";
+            } else if(comp > 0){
+                a = A.value;
+                b = B.value;
+            } else{
+                a = B.value;
+                b = A.value;
+            }
+		}
+
+        int carry = 48;
+
+		std::string sub = a;
+
+		for(int i = a.length() -1 ; i>=0 ; i--){
+
+			if(a[i] <= b[i]){
+
+                sub[i] = (a[i] - 48 + 10) - (carry - 48) - (b[i] - 48) + 48;
+                carry = 49;
+
+			} else{
+
+                sub[i] = (a[i] - 48) - (b[i] - 48) - (carry - 48) + 48;
+                carry = 48;
+
+			}
+		}
+
+        sub = normalize(sub);
+
+		return sub;
 
 	}
 	
