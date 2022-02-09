@@ -240,7 +240,7 @@ public:
 		return x.lessThan(x,y);
 	}
 
-    bool operator <= (Bignteger& y){
+	bool operator <= (Bignteger& y){
 		Bignteger x = intReturn();
 		if(x.lessThan(x,y) || x.equalTo(x,y)){
             return 1;
@@ -251,8 +251,8 @@ public:
 		Bignteger x = intReturn();
 		return x.equalTo(x,y);
 	}
-
-    bool operator != (Bignteger& y){
+	
+	bool operator != (Bignteger& y){
 		Bignteger x = intReturn();
 		return !(x.equalTo(x,y));
 	}
