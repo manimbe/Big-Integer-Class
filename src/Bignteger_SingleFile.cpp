@@ -221,6 +221,42 @@ public:
 
 	}
 	
+	/* --------- Operators --------- */
+
+	bool operator > (Bignteger& y){
+		Bignteger x = intReturn();
+		return x.greaterThan(x,y);
+	} //START MEASURING TIME (performance)
+
+	bool operator >= (Bignteger& y){
+		Bignteger x = intReturn();
+		if(x.greaterThan(x,y) || x.equalTo(x,y)){
+            return 1;
+		} else return 0;
+	}
+
+	bool operator < (Bignteger& y){
+		Bignteger x = intReturn();
+		return x.lessThan(x,y);
+	}
+
+    bool operator <= (Bignteger& y){
+		Bignteger x = intReturn();
+		if(x.lessThan(x,y) || x.equalTo(x,y)){
+            return 1;
+		} else return 0;
+	}
+
+	bool operator == (Bignteger& y){
+		Bignteger x = intReturn();
+		return x.equalTo(x,y);
+	}
+
+    bool operator != (Bignteger& y){
+		Bignteger x = intReturn();
+		return !(x.equalTo(x,y));
+	}
+	
 };
 
 int main(){
