@@ -202,7 +202,12 @@ public:
 
 		for(int i = a.length() -1 ; i>=0 ; i--){
 
-			if(a[i] <= b[i]){
+			if(a[i] < b[i]){
+
+                sub[i] = (a[i] - 48 + 10) - (carry - 48) - (b[i] - 48) + 48;
+                carry = 49;
+
+			} else if((a[i] == b[i]) && (carry == 49)){
 
                 sub[i] = (a[i] - 48 + 10) - (carry - 48) - (b[i] - 48) + 48;
                 carry = 49;
