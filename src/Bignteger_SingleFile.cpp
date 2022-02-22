@@ -226,12 +226,49 @@ public:
 
 	}
 	
+	std::string valueMultiplication(Bignteger &A, Bignteger &B){
+
+        std::string a = A.value;
+        std::string b = B.value;
+
+        int lengthA = a.length();
+        int lengthB = b.length();
+
+        int l = lengthA + lengthB;
+        std::string mult;
+        mult.resize(l, 0);
+
+        int carry;
+
+        int it = l-1;
+        for(int i = lengthB - 1; i>=0; i--){
+            carry = 0;
+            for(int j = lengthA - 1; j>=0; j--){
+                    mult[it] = mult[it] + carry + (a[j]-48)*(b[i]-48);
+                    if(mult[it] > 9){
+                        carry = mult[it] / 10;
+                        mult[it] = mult[it] - (carry*10);
+                    } else carry = 0;
+                    it--;
+            }
+            mult[it] = mult[it] + carry;
+            it = it + lengthA - 1;
+        }
+
+        for(int i = 0; i < l; i++){
+            mult[i] += 48;
+        }
+
+        return normalize(mult);
+
+	}
+	
 	/* --------- Operators --------- */
 
 	bool operator > (Bignteger& y){
 		Bignteger x = intReturn();
 		return x.greaterThan(x,y);
-	} //START MEASURING TIME (performance)
+	}
 
 	bool operator >= (Bignteger& y){
 		Bignteger x = intReturn();
