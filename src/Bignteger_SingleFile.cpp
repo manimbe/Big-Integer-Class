@@ -73,43 +73,31 @@ public:
 		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
 		
-		if(aSym == 0 & bSym == 1){
+		if(aSym == 0 && bSym == 1){
 			return 1;
 		} else
-		
-		if(aSym == 1 & bSym == 0){
+
+		if(aSym == 1 && bSym == 0){
 			return 0;
 		} else
-		
-		if((a.value.length() > b.value.length()) & (aSym == 1)){
-			return 0;
-		} else
-		
-		if((a.value.length() > b.value.length()) & (aSym == 0)){
+
+		if((a.value.length() == b.value.length()) && (aSym == 1) && (a.value.compare(b.value) < 0)){
 			return 1;
 		} else
-		
-		if((a.value.length() < b.value.length()) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if(a.value.compare(b.value) == 0){
-			return 0;
-		} else
-		
-		if((a.value.compare(b.value) < 0) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if((a.value.compare(b.value) < 0) & (aSym == 1)){
+
+		if((a.value.length() == b.value.length()) && (aSym == 0) && (a.value.compare(b.value) > 0)){
 			return 1;
 		} else
-		
-		if((a.value.compare(b.value) > 0) & (aSym == 1)){
-			return 0;
+
+		if((a.value.length() > b.value.length()) && (aSym == 0)){
+			return 1;
 		} else
-		
-		return 1;
+
+		if((a.value.length() < b.value.length()) && (aSym == 1)){
+			return 1;
+		} else
+
+		return 0;
 	}
 	
 	bool equalTo(Bignteger a, Bignteger b){
