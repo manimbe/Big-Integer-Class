@@ -257,7 +257,7 @@ public:
 	    B.negative = 0;
 
 	    if(B.value == "0"){
-            //add exception handling ("x/0")
+            throw "undefined division";
 	    }
 
 	    if(A.value == "0"){
