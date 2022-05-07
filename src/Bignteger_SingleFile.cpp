@@ -73,43 +73,31 @@ public:
 		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
 		
-		if(aSym == 0 & bSym == 1){
+		if(aSym == 0 && bSym == 1){
 			return 1;
 		} else
-		
-		if(aSym == 1 & bSym == 0){
+
+		if(aSym == 1 && bSym == 0){
 			return 0;
 		} else
-		
-		if((a.value.length() > b.value.length()) & (aSym == 1)){
-			return 0;
-		} else
-		
-		if((a.value.length() > b.value.length()) & (aSym == 0)){
+
+		if((a.value.length() == b.value.length()) && (aSym == 1) && (a.value.compare(b.value) < 0)){
 			return 1;
 		} else
-		
-		if((a.value.length() < b.value.length()) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if(a.value.compare(b.value) == 0){
-			return 0;
-		} else
-		
-		if((a.value.compare(b.value) < 0) & (aSym == 0)){
-			return 0;
-		} else
-		
-		if((a.value.compare(b.value) < 0) & (aSym == 1)){
+
+		if((a.value.length() == b.value.length()) && (aSym == 0) && (a.value.compare(b.value) > 0)){
 			return 1;
 		} else
-		
-		if((a.value.compare(b.value) > 0) & (aSym == 1)){
-			return 0;
+
+		if((a.value.length() > b.value.length()) && (aSym == 0)){
+			return 1;
 		} else
-		
-		return 1;
+
+		if((a.value.length() < b.value.length()) && (aSym == 1)){
+			return 1;
+		} else
+
+		return 0;
 	}
 	
 	bool equalTo(Bignteger a, Bignteger b){
@@ -260,6 +248,80 @@ public:
         }
 
         return normalize(mult);
+
+	}
+	
+	std::string valueDivision(Bignteger A, Bignteger B){
+
+	    A.negative = 0;
+	    B.negative = 0;
+
+	    if(B.value == "0"){
+            throw "undefined division";
+	    }
+
+	    if(A.value == "0"){
+            return A.value;
+	    }
+
+	    if(B.value == "1"){
+            return A.value;
+	    }
+
+	    if(B > A){
+            return "0";
+	    }
+
+	    if(A == B){
+            return "1";
+	    }
+
+        int lengthA = A.value.length();
+        int lengthB = B.value.length();
+        int diff = lengthA - lengthB;
+
+        Bignteger support("1");
+        support.value.insert(1, diff, '0');
+
+        bool status = 1;
+        Bignteger division("0");
+        Bignteger result("0");
+
+        while(diff >= 0){
+            if(status == 1){
+                while(A > result){
+                    division = division.valueSum(division, support);
+                    result = B.valueMultiplication(B, division);
+                }
+                if(A == result){
+                    return division.value;
+                } else{
+                status = 0;
+                support.value.pop_back();
+                diff--;
+
+                }
+            } else{
+              while(result > A){
+                    division = division.valueSubtraction(division, support);
+                    result = B.valueMultiplication(B, division);
+                }
+                if(A == result){
+                    return division.value;
+                } else{
+                status = 1;
+                support.value.pop_back();
+                diff--;
+                }
+            }
+        }
+
+        if((diff < 0) && (A != result) && (status == 0)){
+           support.value = "1";
+           division = division.valueSubtraction(division, support);
+           }
+
+        return division.value;
 
 	}
 	
