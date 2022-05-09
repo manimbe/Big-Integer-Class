@@ -325,6 +325,16 @@ public:
 
 	}
 	
+	std::string valueModulo(Bignteger& A, Bignteger& B){
+
+        Bignteger division = A.valueDivision(A,B);
+        Bignteger support = B.valueMultiplication(B, division);
+        Bignteger result = A.valueSubtraction(A, support);
+
+        return result.value;
+
+	}
+	
 	/* --------- Operators --------- */
 
 	bool operator > (Bignteger& y){
