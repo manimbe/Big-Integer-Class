@@ -370,7 +370,36 @@ public:
 		Bignteger x = intReturn();
 		return !(x.equalTo(x,y));
 	}
-	
+
+	std::string operator + (Bignteger& y){
+		Bignteger x = intReturn();
+		bool xSym = x.negative;
+		bool ySym = y.negative;
+		Bignteger sum;
+
+		if(xSym == ySym){
+		    sum = x.valueSum(x,y);
+		    if(xSym == 1){
+			sum.value.insert(0, "-");
+			return sum.value;
+		    } else return sum.value;
+		} else{
+		    sum = x.valueSubtraction(x,y);
+		    x.negative = 0;
+		    y.negative = 0;
+		    if((xSym == 1 && x>y) || (ySym == 1 && y>x)){  // FIX
+			sum.value.insert(0, "-");
+			x.negative = xSym;
+			y.negative = ySym;
+			return sum.value;
+		    } else{
+			x.negative = xSym;
+			y.negative = ySym;
+			return sum.value;
+		    }
+		}
+	}
+
 };
 
 int main(){
