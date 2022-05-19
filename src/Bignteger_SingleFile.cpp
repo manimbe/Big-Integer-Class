@@ -387,7 +387,7 @@ public:
 		    sum = x.valueSubtraction(x,y);
 		    x.negative = 0;
 		    y.negative = 0;
-		    if((xSym == 1 && x>y) || (ySym == 1 && y>x)){  // FIX
+		    if((xSym == 1 && x>y) || (ySym == 1 && y>x)){
 			sum.value.insert(0, "-");
 			x.negative = xSym;
 			y.negative = ySym;
