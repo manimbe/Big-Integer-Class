@@ -327,11 +327,11 @@ public:
 	
 	std::string valueModulo(Bignteger& A, Bignteger& B){
 
-        Bignteger division = A.valueDivision(A,B);
-        Bignteger support = B.valueMultiplication(B, division);
-        Bignteger result = A.valueSubtraction(A, support);
+		Bignteger division = A.valueDivision(A,B);
+		Bignteger support = B.valueMultiplication(B, division);
+		Bignteger result = A.valueSubtraction(A, support);
 
-        return result.value;
+		return result.value;
 
 	}
 	
@@ -428,7 +428,37 @@ public:
 			}
 		}
 	}
+	
+	std::string operator * (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger multiplication = x.valueMultiplication(x,y);
+		if(x.negative == y.negative){
+		    return multiplication.value;
+		} else{
+		    return multiplication.value.insert(0, "-");
+		}
+	}
+	
+	std::string operator / (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger division = x.valueDivision(x,y);
+		if(x.negative == y.negative){
+		    return division.value;
+		} else{
+		    return division.value.insert(0, "-");
+		}
+	}
 
+	std::string operator % (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger modulo = x.valueModulo(x,y);
+		if(x.negative == 0){
+		    return modulo.value;
+		} else{
+		    return modulo.value.insert(0, "-");
+		}
+	}
+	
 };
 
 int main(){
