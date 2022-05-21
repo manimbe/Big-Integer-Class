@@ -327,11 +327,11 @@ public:
 	
 	std::string valueModulo(Bignteger& A, Bignteger& B){
 
-        Bignteger division = A.valueDivision(A,B);
-        Bignteger support = B.valueMultiplication(B, division);
-        Bignteger result = A.valueSubtraction(A, support);
+		Bignteger division = A.valueDivision(A,B);
+		Bignteger support = B.valueMultiplication(B, division);
+		Bignteger result = A.valueSubtraction(A, support);
 
-        return result.value;
+		return result.value;
 
 	}
 	
@@ -369,6 +369,94 @@ public:
 	bool operator != (Bignteger& y){
 		Bignteger x = intReturn();
 		return !(x.equalTo(x,y));
+	}
+
+	std::string operator + (Bignteger& y){
+		Bignteger x = intReturn();
+		bool xSym = x.negative;
+		bool ySym = y.negative;
+		Bignteger sum;
+
+		if(xSym == ySym){
+		    sum = x.valueSum(x,y);
+		    if(xSym == 1){
+			sum.value.insert(0, "-");
+			return sum.value;
+		    } else return sum.value;
+		} else{
+		    sum = x.valueSubtraction(x,y);
+		    x.negative = 0;
+		    y.negative = 0;
+		    if((xSym == 1 && x>y) || (ySym == 1 && y>x)){
+			sum.value.insert(0, "-");
+			x.negative = xSym;
+			y.negative = ySym;
+			return sum.value;
+		    } else{
+			x.negative = xSym;
+			y.negative = ySym;
+			return sum.value;
+		    }
+		}
+	}
+	
+	std::string operator - (Bignteger& y){
+		Bignteger x = intReturn();
+		bool xSym = x.negative;
+		bool ySym = y.negative;
+		Bignteger subtraction;
+
+		if(xSym != ySym){
+		    subtraction = x.valueSum(x,y);
+		    if(xSym == 1){
+			subtraction.value.insert(0, "-");
+			return subtraction.value;
+		    } else return subtraction.value;
+		} else{
+		    subtraction = x.valueSubtraction(x,y);
+		    x.negative = 0;
+		    y.negative = 0;
+		    if((xSym == 0 && x<y)||(xSym == 1 && x>y)){
+			subtraction.value.insert(0, "-");
+			x.negative = xSym;
+			y.negative = ySym;
+			return subtraction.value;
+		    } else{
+			x.negative = xSym;
+			y.negative = ySym;
+			return subtraction.value;
+			}
+		}
+	}
+	
+	std::string operator * (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger multiplication = x.valueMultiplication(x,y);
+		if(x.negative == y.negative){
+		    return multiplication.value;
+		} else{
+		    return multiplication.value.insert(0, "-");
+		}
+	}
+	
+	std::string operator / (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger division = x.valueDivision(x,y);
+		if(x.negative == y.negative){
+		    return division.value;
+		} else{
+		    return division.value.insert(0, "-");
+		}
+	}
+
+	std::string operator % (Bignteger& y){
+		Bignteger x = intReturn();
+		Bignteger modulo = x.valueModulo(x,y);
+		if(x.negative == 0){
+		    return modulo.value;
+		} else{
+		    return modulo.value.insert(0, "-");
+		}
 	}
 	
 };
