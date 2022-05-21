@@ -399,6 +399,35 @@ public:
 		    }
 		}
 	}
+	
+	std::string operator - (Bignteger& y){
+		Bignteger x = intReturn();
+		bool xSym = x.negative;
+		bool ySym = y.negative;
+		Bignteger subtraction;
+
+		if(xSym != ySym){
+		    subtraction = x.valueSum(x,y);
+		    if(xSym == 1){
+			subtraction.value.insert(0, "-");
+			return subtraction.value;
+		    } else return subtraction.value;
+		} else{
+		    subtraction = x.valueSubtraction(x,y);
+		    x.negative = 0;
+		    y.negative = 0;
+		    if((xSym == 0 && x<y)||(xSym == 1 && x>y)){
+			subtraction.value.insert(0, "-");
+			x.negative = xSym;
+			y.negative = ySym;
+			return subtraction.value;
+		    } else{
+			x.negative = xSym;
+			y.negative = ySym;
+			return subtraction.value;
+			}
+		}
+	}
 
 };
 
