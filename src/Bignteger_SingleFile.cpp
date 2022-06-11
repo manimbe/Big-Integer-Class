@@ -68,7 +68,7 @@ public:
 	
 	}
 	
-	bool greaterThan(Bignteger a, Bignteger b){
+	bool greaterThan(Bignteger& a, Bignteger& b){
 		
 		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
@@ -100,7 +100,7 @@ public:
 		return 0;
 	}
 	
-	bool equalTo(Bignteger a, Bignteger b){
+	bool equalTo(Bignteger& a, Bignteger& b){
 		
 		bool aSym = a.symbolReturn();
 		bool bSym = b.symbolReturn();
@@ -112,7 +112,7 @@ public:
 		return 0;
 	}
 	
-	bool lessThan(Bignteger a, Bignteger b){
+	bool lessThan(Bignteger& a, Bignteger& b){
 		if((a.equalTo(a,b) == 0) & (a.greaterThan(a,b) == 0)){
 			return 1;
 		} else
