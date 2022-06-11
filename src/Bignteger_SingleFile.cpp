@@ -13,8 +13,17 @@ public:
 		value = "0";
 	}
 	
-	Bignteger(std::string v){
-		
+	Bignteger(const char* v){
+		value = v;
+		if(value[0] == '-'){
+		    negative = 1;
+		    value = normalize(value.substr(1,value.length()));
+		} else{
+		    value = normalize(value);
+		}
+	}
+
+	Bignteger(const std::string&& v){
 		if(v[0] == '-'){
 			negative = 1;
 			value = normalize(v.substr(1,v.length()));
@@ -22,6 +31,12 @@ public:
 			value = normalize(v);
 		}
 	}
+
+	Bignteger(const Bignteger& v)
+        	: value(v.value), negative(v.negative){}
+
+    	Bignteger(const Bignteger&& v)
+        	: value(v.value), negative(v.negative){}
 
 	std::string intReturn(){
 		
@@ -336,6 +351,43 @@ public:
 	}
 	
 	/* --------- Operators --------- */
+	
+	Bignteger& operator = (const Bignteger& other){
+		value = other.value;
+		negative = other.negative;
+		return *this;
+	}
+
+	Bignteger& operator = (const Bignteger&& other){
+		value = other.value;
+		negative = other.negative;
+		return *this;
+	}
+
+	Bignteger& operator = (const char*&& other){
+		value = other;
+		if(value[0] == '-'){
+		    negative = 1;
+		    value = normalize(value.substr(1,value.length()));
+		    return *this;
+		} else{
+		    value = normalize(other);
+		    negative = 0;
+		    return *this;
+		}
+	}
+
+	Bignteger& operator = (std::string&& other){
+		if(other[0] == '-'){
+		    value = other.substr(1, other.length());
+		    negative = 1;
+		    return *this;
+		} else{
+		    value = other;
+		    negative = 0;
+		    return *this;
+		}
+	}
 
 	bool operator > (Bignteger& y){
 		Bignteger x = intReturn();
