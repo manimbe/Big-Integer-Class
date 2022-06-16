@@ -39,36 +39,26 @@ public:
         	: value(v.value), negative(v.negative){}
 
 	std::string intReturn(){
-		
 		std::string aux = value;
-		
 		if(negative == 1){
 			aux = aux.insert(0,"-");
 		}
-		
 		return aux;
 	}
-	
-	void display(){
-		
-		if(negative == 1){
-			std::cout << "-";
-		}
-		
-		std::cout << value << std::endl;
-		
-	}
-	
-	bool symbolReturn(){
+
+	inline bool symbolReturn(){
 		return negative;
 	}
-	
-	std::string valueReturn(){
+
+	inline std::string valueReturn(){
 		return value;
 	}
-	
+
+	inline size_t lengthReturn(){
+		return value.length();
+	}
+
 	std::string normalize(std::string number){
-		
 		if(number[0] != '-'){
 			while(number.length() > 1 && number[0] == '0'){
 				number.erase(0,1);
@@ -78,9 +68,7 @@ public:
 				number.erase(1,1);
 			}
 		}
-	
 		return number;
-	
 	}
 	
 	bool greaterThan(Bignteger& a, Bignteger& b){
