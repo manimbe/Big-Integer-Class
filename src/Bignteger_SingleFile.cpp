@@ -39,7 +39,7 @@ public:
         : value(v.value), negative(v.negative){}
 
 
-	std::string intReturn(){
+	std::string intReturn() const{
 		std::string aux = value;
 		if(negative == 1){
 			aux = aux.insert(0,"-");
@@ -47,19 +47,19 @@ public:
 		return aux;
 	}
 
-	inline bool symbolReturn(){
+	inline bool symbolReturn() const{
 		return negative;
 	}
 
-	inline std::string valueReturn(){
+	inline std::string valueReturn() const{
 		return value;
 	}
 
-	inline size_t lengthReturn(){
+	inline size_t lengthReturn() const{
         	return value.length();
 	}
 
-	std::string normalize(std::string number){
+	std::string normalize(std::string number) const{
 		if(number[0] != '-'){
 			while(number.length() > 1 && number[0] == '0'){
 				number.erase(0,1);
@@ -72,7 +72,7 @@ public:
 		return number;
 	}
 
-	bool greaterThan(Bignteger& other){
+	bool greaterThan(const Bignteger& other) const{
 		bool thisSym = this->symbolReturn();
 		bool otherSym = other.symbolReturn();
 		if(thisSym == 0 && otherSym == 1){
@@ -91,7 +91,7 @@ public:
 		return 0;
 	}
 
-	bool equalTo(Bignteger& other){
+	bool equalTo(const Bignteger& other) const{
 		bool thisSym = this->symbolReturn();
 		bool otherSym = other.symbolReturn();
 		if((thisSym == otherSym) & (this->value.compare(other.value) == 0)){
@@ -100,14 +100,14 @@ public:
 		return 0;
 	}
 
-	bool lessThan(Bignteger& other){
+	bool lessThan(const Bignteger& other) const{
 		if((this->equalTo(other) == 0) & (this->greaterThan(other) == 0)){
 			return 1;
 		} else
 		return 0;
 	}
 
-	std::string valueSum(Bignteger &other){
+	std::string valueSum(const Bignteger &other) const{
 		std::string a = this->valueReturn();
 		std::string b = other.valueReturn();
 		int diff = a.length() - b.length();
@@ -138,7 +138,7 @@ public:
 		return sum;
 	}
 
-	std::string valueSubtraction(Bignteger &other){
+	std::string valueSubtraction(const Bignteger &other) const{
 		std::string a;
 		std::string b;
 		int diff = a.length() - b.length();
@@ -182,7 +182,7 @@ public:
 		return normalize(sub);
 	}
 
-	std::string valueMultiplication(Bignteger &other){
+	std::string valueMultiplication(const Bignteger &other) const{
 		std::string a = this->valueReturn();
 		std::string b = other.valueReturn();
 		int lengthA = a.length();
@@ -213,70 +213,70 @@ public:
 		return normalize(mult);
 	}
 
-	std::string valueDivision(Bignteger B){
-	    Bignteger A = intReturn();
-	    A.negative = 0;
-	    B.negative = 0;
-	    if(B.valueReturn() == "0"){
-            	throw "undefined division";
-	    }
-	    if(A.valueReturn() == "0"){
-            	return A.valueReturn();
-	    }
-	    if(B.valueReturn() == "1"){
-            	return A.valueReturn();
-	    }
-	    if(B > A){
-            	return "0";
-	    }
+	std::string valueDivision(Bignteger B) const{
+		Bignteger A = intReturn();
+	    	A.negative = 0;
+	    	B.negative = 0;
+	    	if(B.valueReturn() == "0"){
+            		throw "undefined division";
+	    	}
+	    	if(A.valueReturn() == "0"){
+            		return A.valueReturn();
+	    	}
+	    	if(B.valueReturn() == "1"){
+            		return A.valueReturn();
+	    	}
+	    	if(B > A){
+			return "0";
+	    	}
 
-        int lengthA = A.lengthReturn();
-        int lengthB = B.lengthReturn();
-        int diff = lengthA - lengthB;
+		int lengthA = A.lengthReturn();
+		int lengthB = B.lengthReturn();
+		int diff = lengthA - lengthB;
 
-        Bignteger support = "1";
-        support.value.insert(1, diff, '0');
+		Bignteger support = "1";
+		support.value.insert(1, diff, '0');
 
-        bool status = 1;
-        Bignteger division = "0";
-        Bignteger result = "0"; //B * division result
+		bool status = 1;
+		Bignteger division = "0";
+		Bignteger result = "0"; //B * division result
 
-        while(diff >= 0){
-            if(status == 1){
-                while(A > result){
-                    division = division.valueSum(support);
-                    result = B.valueMultiplication(division);
-                }
-                if(A == result){
-                    return division.valueReturn();
-                } else{
-                status = 0;
-                support.value.pop_back();
-                diff--;
-                }
-            } else{
-              while(result > A){
-                    division = division.valueSubtraction(support);
-                    result = B.valueMultiplication(division);
-                }
-                if(A == result){
-                    return division.valueReturn();
-                } else{
-                status = 1;
-                support.value.pop_back();
-                diff--;
-                }
-            }
-        }
+		while(diff >= 0){
+		    if(status == 1){
+			while(A > result){
+			    division = division.valueSum(support);
+			    result = B.valueMultiplication(division);
+			}
+			if(A == result){
+			    return division.valueReturn();
+			} else{
+			status = 0;
+			support.value.pop_back();
+			diff--;
+			}
+		    } else{
+		      while(result > A){
+			    division = division.valueSubtraction(support);
+			    result = B.valueMultiplication(division);
+			}
+			if(A == result){
+			    return division.valueReturn();
+			} else{
+			status = 1;
+			support.value.pop_back();
+			diff--;
+			}
+		    }
+		}
 
-        if((diff < 0) && (A != result) && (status == 0)){
-           support.value = "1";
-           division = division.valueSubtraction(support);
-           }
-        return division.valueReturn();
+		if((diff < 0) && (A != result) && (status == 0)){
+		   support.value = "1";
+		   division = division.valueSubtraction(support);
+		   }
+		return division.valueReturn();
 	}
 
-	std::string valueModulo(Bignteger& other){
+	std::string valueModulo(const Bignteger& other) const{
 		Bignteger division = this->valueDivision(other);
 		Bignteger support = other.valueMultiplication(division);
 		Bignteger result = this->valueSubtraction(support);
@@ -322,31 +322,31 @@ public:
 		}
 	}
 
-	bool operator > (Bignteger& y){
+	bool operator > (const Bignteger& y) const{
 		return greaterThan(y);
 	}
 
-	bool operator >= (Bignteger& y){
+	bool operator >= (const Bignteger& y) const{
 		if(this->greaterThan(y) || this->equalTo(y)){
             return 1;
 		} else return 0;
 	}
 
-	bool operator < (Bignteger& y){
+	bool operator < (const Bignteger& y) const{
 		return lessThan(y);
 	}
 
-    	bool operator <= (Bignteger& y){
+    	bool operator <= (const Bignteger& y) const{
 		if(this->lessThan(y) || this->equalTo(y)){
             return 1;
 		} else return 0;
 	}
 
-	bool operator == (Bignteger& y){
+	bool operator == (const Bignteger& y) const{
 		return equalTo(y);
 	}
 
-    	bool operator != (Bignteger& y){
+    	bool operator != (const Bignteger& y) const{
 		return !(equalTo(y));
 	}
 
@@ -406,16 +406,16 @@ public:
 		}
 	}
 
-	std::string operator * (Bignteger& y){
+	std::string operator * (const Bignteger& y) const{
 		Bignteger multiplication = this->valueMultiplication(y);
 		if(this->symbolReturn() == y.symbolReturn()){
 		    return multiplication.valueReturn();
 		} else{
 		    return multiplication.value.insert(0, "-");
 		}
-		}
+	}
 
-		std::string operator / (Bignteger& y){
+	std::string operator / (const Bignteger& y) const{
 		Bignteger division = this->valueDivision(y);
 		if(this->symbolReturn() == y.symbolReturn()){
 		    return division.valueReturn();
@@ -424,7 +424,7 @@ public:
 		}
 	}
 
-	std::string operator % (Bignteger& y){
+	std::string operator % (const Bignteger& y) const{
 		Bignteger modulo = this->valueModulo(y);
 		if(this->symbolReturn() == 0){
 		    return modulo.valueReturn();
