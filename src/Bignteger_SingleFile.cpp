@@ -9,6 +9,14 @@ private:
 	
 	/* --------- Methods --------- */
 	
+	std::string intReturn() const{
+		std::string aux = value;
+		if(negative == 1){
+			aux = aux.insert(0,"-");
+		}
+		return aux;
+	}
+	
 	inline bool symbolReturn() const{
 		return negative;
 	}
@@ -277,15 +285,6 @@ public:
 
     	Bignteger(const Bignteger&& v)
         : value(v.value), negative(v.negative){}
-	
-
-	std::string intReturn() const{
-		std::string aux = value;
-		if(negative == 1){
-			aux = aux.insert(0,"-");
-		}
-		return aux;
-	}
 
 	/* --------- Operators --------- */
 
@@ -436,8 +435,15 @@ public:
 		    return modulo.value.insert(0, "-");
 		}
 	}
+	
+	friend std::ostream& operator << (std::ostream& output, const Bignteger& x);
 
 };
+
+std::ostream& operator << (std::ostream& output, const Bignteger& x){
+	output << x.intReturn();
+	return output;
+}
 
 int main(){
 	
