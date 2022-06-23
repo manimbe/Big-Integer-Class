@@ -6,47 +6,9 @@ private:
 
 	bool negative = 0;
 	std::string value;
-
-public:
-
-	Bignteger(){
-		value = "0";
-	}
-
-	Bignteger(const char* v){
-		value = v;
-		if(value[0] == '-'){
-		    negative = 1;
-		    value = normalize(value.substr(1,value.length()));
-		} else{
-		    value = normalize(value);
-		}
-	}
-
-	Bignteger(const std::string&& v){
-		if(v[0] == '-'){
-			negative = 1;
-			value = normalize(v.substr(1,v.length()));
-		} else{
-			value = normalize(v);
-		}
-	}
-
-	Bignteger(const Bignteger& v)
-        : value(v.value), negative(v.negative){}
-
-    	Bignteger(const Bignteger&& v)
-        : value(v.value), negative(v.negative){}
-
-
-	std::string intReturn() const{
-		std::string aux = value;
-		if(negative == 1){
-			aux = aux.insert(0,"-");
-		}
-		return aux;
-	}
-
+	
+	/* --------- Methods --------- */
+	
 	inline bool symbolReturn() const{
 		return negative;
 	}
@@ -281,6 +243,48 @@ public:
 		Bignteger support = other.valueMultiplication(division);
 		Bignteger result = this->valueSubtraction(support);
 		return result.valueReturn();
+	}
+
+public:
+	
+	/* --------- Constructors --------- */
+
+	Bignteger(){
+		value = "0";
+	}
+
+	Bignteger(const char* v){
+		value = v;
+		if(value[0] == '-'){
+		    negative = 1;
+		    value = normalize(value.substr(1,value.length()));
+		} else{
+		    value = normalize(value);
+		}
+	}
+
+	Bignteger(const std::string&& v){
+		if(v[0] == '-'){
+			negative = 1;
+			value = normalize(v.substr(1,v.length()));
+		} else{
+			value = normalize(v);
+		}
+	}
+
+	Bignteger(const Bignteger& v)
+        : value(v.value), negative(v.negative){}
+
+    	Bignteger(const Bignteger&& v)
+        : value(v.value), negative(v.negative){}
+	
+
+	std::string intReturn() const{
+		std::string aux = value;
+		if(negative == 1){
+			aux = aux.insert(0,"-");
+		}
+		return aux;
 	}
 
 	/* --------- Operators --------- */
